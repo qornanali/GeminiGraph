@@ -27,8 +27,8 @@ $(BIN): $(OBJ)
 main.o: main.c
 	$(CPP) -c main.c -o main.o $(CXXFLAGS)
 
-textureloader.o: textureloader.c
-	$(CPP) -c textureloader.c -o textureloader.o $(CXXFLAGS)
+textureloader.o: textureloader.cpp
+	$(CPP) -c textureloader.cpp -o textureloader.o $(CXXFLAGS)
 
 glinterface.o: glinterface.c
 	$(CPP) -c glinterface.c -o glinterface.o $(CXXFLAGS)

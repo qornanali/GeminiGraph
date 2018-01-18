@@ -2,7 +2,6 @@
 #define  __PENDOPO_H__
 
 #include "glinterface.h"
-#include "textureloader.h"
 
 void drawRoof();
 void drawSky();

@@ -1,4 +1,5 @@
 #include "pendopo.h"
+#include <stdio.h>
 
 #define VIEWING_DISTANCE_MIN  3.0
 
@@ -12,11 +13,12 @@ static BOOL g_bButton1Down = FALSE;
 
 int yoy = 0;
 
+GLuint brickTextureId;
 
 void onDisplay();
 void onReshape(int w, int h); 
 void onSpecialKeysClicked(int key, int x, int y ); 
-void onRenderObjects(); 
+void onLoadTexture(); 
 void onMotionMouse(int x, int y);
 void onMouseClicked(int button, int state, int x, int y);
 void onKeysClicked(unsigned char key, int x, int y);
@@ -42,7 +44,7 @@ void onDisplay(){
 	glLoadIdentity();
 	gluLookAt(0.0, -g_fViewDistance, 0.0, 0, 0, -1, 0, 1, 0);
 	glLightfv(GL_LIGHT0, GL_POSITION, g_lightPos);
-	onRenderObjects();
+	onLoadTexture();
 	glMatrixMode(GL_MODELVIEW);
   	glPushMatrix();
 	  	glRotatef(rotate_x, 1.0, 0.0, 0.0 );
@@ -56,7 +58,7 @@ void onDisplay(){
 
 void onDrawScene(){
 	glIntDrawPrism3(DEFAULT_COORD, 2.0, 1.0, 3.0, DEFAULT_COLOR);
-	glIntDrawPrism4(insCoord(3.0, 3.0, 3.0), 2.0, 1.0, 3.0, DEFAULT_COLOR);
+	glIntDrawPrism4(insCoord(3.0, 3.0, 3.0), 2.0, 1.0, 3.0, DEFAULT_COLOR, brickTextureId);
 }
 
 void onReshape(int w, int h){
@@ -67,8 +69,14 @@ void onReshape(int w, int h){
     glMatrixMode(GL_MODELVIEW);
 }
 
-void onRenderObjects(){
+void onLoadTexture(){
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_COLOR_MATERIAL);
 	
+	Image* image = loadBMP("assets/brick.bmp");
+	brickTextureId = glIntLoadTexture(image);
+	delete image;
 }
 
 void onSpecialKeysClicked(int key, int x, int y){
