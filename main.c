@@ -1,7 +1,4 @@
-#include "glinterface.h"
-#include "jsonparser.h"
-#include "textureloader.h"
-#include "listjsonobject.h"
+#include "pendopo.h"
 
 #define VIEWING_DISTANCE_MIN  3.0
 
@@ -26,16 +23,13 @@ void onKeysClicked(unsigned char key, int x, int y);
 void onDrawScene();
 
 int main(int argc, char** argv) {
-//	for(int i = 0; i < 5; i++){
-//		printf("%d ", i%2);
-//	}
-	glIntInit(argc, argv);
-	glutDisplayFunc(onDisplay);
-	glutReshapeFunc(onReshape);
-	glutMotionFunc (onMotionMouse);
-	glutMouseFunc (onMouseClicked);
-	glutSpecialFunc(onSpecialKeysClicked);
-	glutKeyboardFunc (onKeysClicked);
+	glIntBegin(argc, argv);
+		glutDisplayFunc(onDisplay);
+		glutReshapeFunc(onReshape);
+		glutMotionFunc (onMotionMouse);
+		glutMouseFunc (onMouseClicked);
+		glutSpecialFunc(onSpecialKeysClicked);
+		glutKeyboardFunc (onKeysClicked);
 	glIntEnd();
 	return 0;
 }
@@ -46,7 +40,7 @@ void onDisplay(){
 	printf("Modul Display\n");
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(4.0, 4.0, 4.0, 0, 0, -1, 0, 1, 0);
+	gluLookAt(0.0, -g_fViewDistance, 0.0, 0, 0, -1, 0, 1, 0);
 	glLightfv(GL_LIGHT0, GL_POSITION, g_lightPos);
 	onRenderObjects();
 	glMatrixMode(GL_MODELVIEW);
@@ -54,39 +48,18 @@ void onDisplay(){
 	  	glRotatef(rotate_x, 1.0, 0.0, 0.0 );
 	  	glRotatef(rotate_y, 0.0, 1.0, 0.0 );
 	  	glRotatef(rotate_z, 0.0, 0.0, 1.0 );
-	  	glIntDrawCartesius(0.0, 0.0, 0.0, 100.0);
-	  	glIntDrawPrism(insCoord(0.0, 0.0, 0.0), 1.0, 4, 2.0);
-//		onDrawScene();
+	  	glIntDrawCartesius(DEFAULT_COORD, 100.0);
+		onDrawScene();
 	glPopMatrix();
    	glutSwapBuffers();
 }
 
 void onDrawScene(){
-	/* Depan */
-	glIntDrawPrism4(-5.0, 0.0, 0.0, 10.0, 1.0, 1.0, insColor(1.0, 0.0, 0.0));
-	glIntDrawPrism4(-6.0, 0.0, 1.0, 12.0, 8.0, 1.0, insColor(1.0, 0.0, 0.0));
-	for(int i = 0; i < 2; i++){
-		glIntDrawPrism4(-6.0 + (i * 11.5), -5.0, 1.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-		glIntDrawPrism4(-6.0 + (i * 11.5), -5.0, 8.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-		glIntDrawPrism4(-5.0 + (i * 9.5), -5.0, 2.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-		glIntDrawPrism4(-5.0 + (i * 9.5), -5.0, 8.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-	}
-	
-	/*tiang dinding*/
-//	for(int i = 0; i < 8; i++){
-//		glIntDrawPrism4(-6.0 + (i * 11.5), -5.0, 1.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-//		glIntDrawPrism4(-6.0 + (i * 11.5), -5.0, 8.0, 0.5, 0.25, 5.0, insColor(0.0, 1.0, 1.0));
-//	}
-//	for(int j = 0; j < 2; j++){
-//	}
-	
-	/*Lantai*/
-	glIntDrawPrism4(-25.0, -3.0, 9.0, 50.0, 70.0, 0.5, insColor(1.0, 2.0, 1.0));
-	glIntDrawPrism4(-25.0, -5.0, 9.0, 50.0, 70.0, 2.0, insColor(0.0, 0.0, 1.0));
+	glIntDrawPrism3(DEFAULT_COORD, 2.0, 1.0, 3.0, DEFAULT_COLOR);
+	glIntDrawPrism4(insCoord(3.0, 3.0, 3.0), 2.0, 1.0, 3.0, DEFAULT_COLOR);
 }
 
 void onReshape(int w, int h){
-	printf("Modul Reshape, w=%d, h=%d\n", w, h);
 	glViewport(0.0, 0.0, w, h);
 	glMatrixMode(GL_PROJECTION);
    	glLoadIdentity();
@@ -124,7 +97,6 @@ void onMouseClicked(int button, int state, int x, int y){
       g_bButton1Down = (state == GLUT_DOWN) ? TRUE : FALSE;
       g_yClick = y - 3 * g_fViewDistance;
 	  }
-	  printf("%d %d g_yClick %f", x, y, g_yClick);
 }
 
 void onMotionMouse(int x, int y){
@@ -135,7 +107,6 @@ void onMotionMouse(int x, int y){
          g_fViewDistance = VIEWING_DISTANCE_MIN;
       glutPostRedisplay();
     }
-    printf("%d %d g_bButton1Down %d g_fViewDistance %f", x, y, g_bButton1Down, g_fViewDistance);
 }
 
 
