@@ -10,7 +10,7 @@ void glIntBegin(int argcp, char **argv);
 void glIntDrawPrism4(Coord coord, GLfloat length, GLfloat width, GLfloat height, Color color, GLuint textureId);
 void glIntDrawPrism3(Coord coord, GLfloat length, GLfloat width, GLfloat height, Color color);
 void glIntDrawCartesius(Coord coord, GLfloat radius);
-GLuint glIntLoadTexture(Image* image);
+void glIntLoadTexture(Image* image, GLuint * textureId);
 void glIntEnd();
 
 #endif

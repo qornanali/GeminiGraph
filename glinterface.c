@@ -35,13 +35,12 @@ void glIntBegin(int argcp, char ** argv){
     glutInitWindowPosition(0,0);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
   	glutCreateWindow("Pendopo Tony Agung");
-  	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-    glEnable(GL_TEXTURE_2D);
-    glEnable(GL_DEPTH_TEST);
-	glMatrixMode(GL_PROJECTION);
-	glOrtho(0, 0, 0, 0, 0, 0);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_LIGHTING);
+//	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_COLOR_MATERIAL);
 }
 
 
@@ -97,10 +96,8 @@ void glIntDrawPrism3(Coord coord, GLfloat length, GLfloat width, GLfloat height,
 
 void glIntDrawPrism4(Coord coord, GLfloat length, GLfloat width, GLfloat height, Color color, GLuint textureId){
 	printf("Draw Prism 4 with first vertex is (%f, %f, %f) with l %f w %f h %f\n", coord.x, coord.y, coord.z, length, width, height);
-	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glPushMatrix();
 	
 		glBegin(GL_POLYGON);
@@ -159,10 +156,8 @@ void glIntDrawPrism4(Coord coord, GLfloat length, GLfloat width, GLfloat height,
 }
 
 
-GLuint glIntLoadTexture(Image* image) {
-	GLuint textureId;
-	glGenTextures(1, &textureId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+void glIntLoadTexture(Image* image, GLuint * textureId) {
+	glGenTextures(1, textureId);
+	glBindTexture(GL_TEXTURE_2D, *textureId);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-	return textureId;
 }
