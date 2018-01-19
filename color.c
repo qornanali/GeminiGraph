@@ -1,5 +1,6 @@
 #include "color.h"
 
+
 Color insColor(float r, float g, float b){
 	Color c;
 	c.r = r;
@@ -7,3 +8,4 @@ Color insColor(float r, float g, float b){
 	c.b = b;
 	return c;
 }
+
