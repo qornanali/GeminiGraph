@@ -1,0 +1,10 @@
+{
+        "xLantai": 2.8,
+        "zLantai": 2.8,
+	"yPendopo": 0.3,
+        "scale": 4.0,
+	"lantai": "Texture/roof.bmp",
+        "atap" : "Texture/atap_bawah.jpg",
+	"pilar": "Texture/pilar.jpg",
+	"tembok": "Texture/window.png" 
+}
