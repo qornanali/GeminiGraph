@@ -1,4 +1,4 @@
-#include "listconfig.h"
+#include "list_Double.h"
 
 #include <limits.h>
 #include <malloc.h>
@@ -6,16 +6,16 @@
 #include <string.h>
 #include <stdio.h>
 
-P_Config allocConfig(){
-	P_Config P = (P_Config) malloc(sizeof(Config));
-	strcpy(P->value, "");
+P_Double allocDouble(){
+	P_Double P = (P_Double) malloc(sizeof(Double));
+	P->value = 0;
 	strcpy(P->name, "");
 	P->next = NULL;
 	return P;
 }
 
-P_Config getConfig(LConfigs L, char name[]){
-	P_Config P = L.first;
+P_Double getDouble(LDoubles L, char name[]){
+	P_Double P = L.first;
 	while(P != NULL){
 		if(strcmp(name, P->name) == 0){
 			return P;
@@ -26,11 +26,11 @@ P_Config getConfig(LConfigs L, char name[]){
 	return P;	
 }
 
-void deAllocConfig (P_Config P){
+void deAllocDouble (P_Double P){
 	free(P);
 }
 
-void addConfigtToList(LConfigs * L, P_Config P){
+void addDoubleToList(LDoubles * L, P_Double P){
 	if((*L).first == NULL){
 		(*L).first = P;
 	}else{
@@ -39,9 +39,9 @@ void addConfigtToList(LConfigs * L, P_Config P){
 	(*L).last = P;
 }
 
-void removeConfigFromList(LConfigs * L, char name[]){
-	P_Config PDel = (*L).first;
-	P_Config PRec = NULL;
+void removeDoubleFromList(LDoubles * L, char name[]){
+	P_Double PDel = (*L).first;
+	P_Double PRec = NULL;
 	int isFound = 0;
 	while(PDel != NULL && !isFound){
 		if(strcmp(name, PDel->name) == 0){
@@ -60,28 +60,28 @@ void removeConfigFromList(LConfigs * L, char name[]){
 			PRec->next = PDel->next; 
 		}
  		PDel->next;
- 		deAllocConfig(PDel);
+ 		deAllocDouble(PDel);
 	}	
 }
 
-void printListItemConfigs(LConfigs L){
-	P_Config P = L.first;
+void printListItemDoubles(LDoubles L){
+	P_Double P = L.first;
 	int i = 0;
 	while(P != NULL){
-		printf("%d -> %s %s\n", i, P->name, P->value);
+		printf("%d -> %s %lf\n", i, P->name, P->value);
 		P = P->next;
 		i++;
 	}
 }
 
-void initListConfigs(LConfigs * L){
+void initListDoubles(LDoubles * L){
 	(*L).first = NULL;
 	(*L).last = NULL;
 }
 
-P_Config createInstanceConfig(char name[], char value[]){
-	P_Config P = allocConfig();
-	strcpy(P->name, name);
-	strcpy(P->value, value);
+P_Double createInstanceDouble(char name[10], double value){
+	P_Double P = allocDouble();
+	P->value = value;
+	
 	return P;
 }

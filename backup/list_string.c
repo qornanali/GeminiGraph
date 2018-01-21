@@ -1,4 +1,4 @@
-#include "listTexture.h"
+#include "list_string.h"
 
 #include <limits.h>
 #include <malloc.h>
@@ -6,16 +6,16 @@
 #include <string.h>
 #include <stdio.h>
 
-P_Texture allocTexture(){
-	P_Texture P = (P_Texture) malloc(sizeof(Texture));
-	P->id = 0;
+P_String allocString(){
+	P_String P = (P_String) malloc(sizeof(String));
+	strcpy(P->value, "");
 	strcpy(P->name, "");
 	P->next = NULL;
 	return P;
 }
 
-P_Texture getTexture(LTextures L, char name[]){
-	P_Texture P = L.first;
+P_String getString(LStrings L, char name[]){
+	P_String P = L.first;
 	while(P != NULL){
 		if(strcmp(name, P->name) == 0){
 			return P;
@@ -26,11 +26,11 @@ P_Texture getTexture(LTextures L, char name[]){
 	return P;	
 }
 
-void deAllocTexture (P_Texture P){
+void deAllocString (P_String P){
 	free(P);
 }
 
-void addTexturetToList(LTextures * L, P_Texture P){
+void addStringToList(LStrings * L, P_String P){
 	if((*L).first == NULL){
 		(*L).first = P;
 	}else{
@@ -39,9 +39,9 @@ void addTexturetToList(LTextures * L, P_Texture P){
 	(*L).last = P;
 }
 
-void removeTextureFromList(LTextures * L, char name[]){
-	P_Texture PDel = (*L).first;
-	P_Texture PRec = NULL;
+void removeStringFromList(LStrings * L, char name[]){
+	P_String PDel = (*L).first;
+	P_String PRec = NULL;
 	int isFound = 0;
 	while(PDel != NULL && !isFound){
 		if(strcmp(name, PDel->name) == 0){
@@ -60,28 +60,28 @@ void removeTextureFromList(LTextures * L, char name[]){
 			PRec->next = PDel->next; 
 		}
  		PDel->next;
- 		deAllocTexture(PDel);
+ 		deAllocString(PDel);
 	}	
 }
 
-void printListItemTextures(LTextures L){
-	P_Texture P = L.first;
+void printListItemStrings(LStrings L){
+	P_String P = L.first;
 	int i = 0;
 	while(P != NULL){
-		printf("%d -> %s %d\n", i, P->name, P->id);
+		printf("%d -> %s %s\n", i, P->name, P->value);
 		P = P->next;
 		i++;
 	}
 }
 
-void initListTextures(LTextures * L){
+void initListStrings(LStrings * L){
 	(*L).first = NULL;
 	(*L).last = NULL;
 }
 
-P_Texture createInstanceTexture(char name[10], unsigned int id){
-	P_Texture P = allocTexture();
-	P->id = id;
+P_String createInstanceString(char name[], char value[]){
+	P_String P = allocString();
 	strcpy(P->name, name);
+	strcpy(P->value, value);
 	return P;
 }

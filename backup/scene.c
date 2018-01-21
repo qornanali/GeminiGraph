@@ -2,14 +2,17 @@
 
 #include "pendopo.h"
 
-extern LTextures lTextures;
-extern LConfigs lConfigs;
+extern LInts lTextures;
+extern LStrings lConfigs;
+extern LDoubles lMeasures;
 
 extern cJSON * jsonPendopo;
 
 extern double rotate_y; 
 extern double rotate_x;
+extern double rotate_z;
 extern double scale;
+
 
 void onWorldDisplay(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -18,19 +21,22 @@ void onWorldDisplay(){
 	glPushMatrix();
   	// glTranslatef( 0.1, 0.0, 0.0 );      // Not included
   	// glRotatef( 180, 0.0, 1.0, 0.0 );    // Not included
-	  	glRotatef(rotate_x, 0.5, 0.0, 0.0 );
-	  	glRotatef(rotate_y, 0.0, 0.5, 0.0 );
-	  	glScalef(scale,scale,scale);
-//		P_Texture P = getTexture(lTextures, "atap");
-//		Color color[6] = {DEFAULT_COLOR, insColor(1.0, 0.0, 0.0), DEFAULT_COLOR, insColor(1.0, 0.0, 1.0), DEFAULT_COLOR, insColor(1.0, 1.0, 0.0)};
-//		int bindings[6] = {TRUE, TRUE, FALSE, TRUE, TRUE, FALSE};
-//		drawPrism4(DEFAULT_COORD, 3.0, 1.5, 2.0, color, P == NULL ? 0 : P->id, bindings);
-//		P_Texture P2 = getTexture(lTextures, "lantai");
-//		Color color2[6] = {DEFAULT_COLOR, insColor(1.0, 0.0, 0.0), DEFAULT_COLOR, insColor(1.0, 0.0, 1.0), DEFAULT_COLOR, insColor(1.0, 1.0, 0.0)};
-//		int bindings2[6] = {TRUE, TRUE, FALSE, TRUE, TRUE, FALSE};
-//		drawPrism4(insCoord(5.0, 5.0, 5.0), 3.0, 1.5, 2.0, color2, P2 == NULL ? 0 : P2->id, bindings2);
+	  	glRotatef(rotate_x, 0.5, 0.0, 0.0);
+		glRotatef(rotate_y, 0.0, 0.5, 0.0);
+		glRotatef(rotate_z, 0.0, 0.0, 0.5);
+		glPushMatrix();		
+		  	glScalef(scale,scale,scale);
+		  	drawWalls();
+			drawPillars();
+			drawFront();
+			drawRoof();
+			drawLand();
+			drawSky();
+		glPopMatrix();
 	  	drawCartesius(DEFAULT_COORD, 100.0);
 	glPopMatrix();
+	
+	glFlush();
   	glutSwapBuffers();
 }
 
@@ -46,23 +52,23 @@ void onWorldReshape(int w, int h){
 }
 
 void onSpecialKeyClicked(int key, int x, int y ){
-  if (key == GLUT_KEY_RIGHT)
-    rotate_y += 1;
+  	if (key == GLUT_KEY_RIGHT)
+    	rotate_y++;
  
-  else if (key == GLUT_KEY_LEFT)
-    rotate_y -= 1;
+ 	else if (key == GLUT_KEY_LEFT)
+    	rotate_y--;
  
-  else if (key == GLUT_KEY_UP)
-    rotate_x += 1;
+  	else if (key == GLUT_KEY_UP)
+    	rotate_x++;
  
-  else if (key == GLUT_KEY_DOWN)
-    rotate_x -= 1;
+  	else if (key == GLUT_KEY_DOWN)
+    	rotate_x--;
+	
+	else if(key == GLUT_KEY_PAGE_UP)
+    	rotate_z++;
     
-    else if(key == GLUT_KEY_PAGE_UP){
-    	scale+=0.1;
-	} 
-  else if(key == GLUT_KEY_PAGE_DOWN)
-  	scale-=0.1;
+  	else if(key == GLUT_KEY_PAGE_DOWN)
+  		rotate_z--;
   	
 //  	else if(key == GLUT_KEY_F5)
 //  	loadTexture();
@@ -75,17 +81,22 @@ void onNormalKeyClicked(unsigned char key, int x, int y){
 	switch (key){
 		case 27 :
 		case 'w':
-			glTranslated(0,0,0.1);
+			glTranslated(0, 0, 0.1);
 			break;
 		case 's':
-			glTranslated(0,0,-0.1);
+			glTranslated(0, 0, -0.1);
 			break;
-			
 		case 'a':
-			glTranslated(0.1,0,0);
+			glTranslated(0.1, 0, 0);
 			break;
 		case 'd':
-			glTranslated(-0.1,0,0);
+			glTranslated(-0.1, 0, 0);
+			break;
+		case 61 :
+			scale += 0.1;
+			break;
+		case 45 :
+			scale -= 0.1;
 			break;
 	}
 	glMatrixMode(GL_MODELVIEW);

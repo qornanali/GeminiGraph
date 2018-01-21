@@ -1,4 +1,14 @@
 {
+	"measures": [{
+		"name": "pendopo_height",
+		"value": "600"
+	}, {
+		"name": "pendopo_lenght",
+		"value": "600"
+	}, {
+		"name": "pendopo_width",
+		"value": "600"
+	}],
 	"configs": [{
 		"name": "window_height",
 		"value": "600"

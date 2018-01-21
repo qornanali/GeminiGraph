@@ -2,8 +2,9 @@
 #define  __SCENE_H__
 
 #include "cJSON.h"
-#include "listtexture.h"
-#include "listconfig.h"
+#include "list_string.h"
+#include "list_int.h"
+#include "list_double.h"
 
 void onWorldDisplay();
 void onWorldIdle();
