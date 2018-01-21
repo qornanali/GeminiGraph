@@ -78,6 +78,7 @@ void onDrawScene(){
 //		drawLand(100.0, 100.0, 2.0);
 //		drawFront(20.0, 20.0, 10.0);
 		glIntDrawCube(DEFAULT_COORD, 3.0, DEFAULT_COLOR, "assets/brick.bmp", TRUE);
+		glIntDrawPrism3(DEFAULT_COORD, 3.0, 2.0, 5.0, DEFAULT_COLOR, "assets/pebblestone.bmp", TRUE);
 	glPopMatrix();
 }
 

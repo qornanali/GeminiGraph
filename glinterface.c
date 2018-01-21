@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void glIntDrawCartesius(Coord coord, GLfloat radius){
+void drawCartesius(Coord coord, GLfloat radius){
 	printf("Draw Cartesius 3D on (%f, %f, %f)\n", coord.x, coord.y, coord.z);
 	glPushMatrix();
 	
@@ -218,9 +218,9 @@ void glIntDrawPrism4(Coord coord, GLfloat length, GLfloat width, GLfloat height,
 		GLuint texture;
 		Image * image = loadBMP(textureImageName);
 		glIntLoadTexture(image, &texture);
+		printf("Texture Id %d---\n", texture);
 		delete image;
 	}
-//	int 1.0f = 1 * (width / length) / 8;
 	glPushMatrix();
 		glBegin(GL_POLYGON);
 	  		glColor3f(color.r, color.g, color.b); 

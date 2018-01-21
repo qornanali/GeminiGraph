@@ -1,10 +1,19 @@
 {
-        "xLantai": 2.8,
-        "zLantai": 2.8,
-	"yPendopo": 0.3,
-        "scale": 4.0,
-	"lantai": "Texture/roof.bmp",
-        "atap" : "Texture/atap_bawah.jpg",
-	"pilar": "Texture/pilar.jpg",
-	"tembok": "Texture/window.png" 
+	"configs": [{
+		"name": "window_height",
+		"value": "600"
+	}, {
+		"name": "window_width",
+		"value": "800"
+	}, {
+		"name": "window_name",
+		"value": "Pendopo Agung Tony"
+	}],
+	"textures": [{
+		"name": "atap",
+		"value": "Texture/atap_bawah.jpg"
+	}, {
+		"name": "lantai",
+		"value": "Texture/pilar.jpg"
+	}]
 }

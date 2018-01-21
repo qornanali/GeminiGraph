@@ -1,5 +1,0 @@
-{
-        "xLantai": 2.8,
-        "zLantai": 2.8,
-        "scale": 3.0 
-}
