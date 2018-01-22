@@ -1,27 +1,25 @@
 #ifndef  __PENDOPO_H__
 #define  __PENDOPO_H__
 
-#include "glinterface.h"
+#define GROUND_LEVEL 0.0
 
-void pendopoStart(int argcp, char ** argv);
-
-void onWorldDisplay();
-void onWorldIdle();
-void onWorldReshape(int w, int h); 
-void onSpecialKeyClicked(int key, int x, int y ); 
-void onNormalKeyClicked(unsigned char key, int x, int y);
-void onMotionMouseClicked(int x, int y);
-void onButtonMouseClicked(int button, int state, int x, int y);
-void onPassiveMouseActived(int x, int y);
-void onDrawScene();
-void initialize();
-
-void drawRoof(GLfloat length, GLfloat width, GLfloat height);
-void drawSky(GLfloat length, GLfloat width, GLfloat height);
-void drawWall(GLfloat length, GLfloat width, GLfloat height);
-void drawFloor(GLfloat length, GLfloat width, GLfloat height);
-void drawLand(GLfloat length, GLfloat width, GLfloat height);
-void drawFront(GLfloat length, GLfloat width, GLfloat height);
+//void drawWalls(float length, float width, float height);
+void drawPillars(float length, float width, float height);
+void drawFront(float length, float width, float height);
+//void drawRoof(float length, float width, float height);
+//void drawLand(float length, float width, float height);
+void drawLand();
+void drawSky();
+void drawFloors(float length, float width, float height);
+//void drawWalls();
+void drawStairs();
+void drawVents();
+void drawGapura();
+void drawRoof();
+void drawRoofMid();
+void drawRoofTop();
+void drawRoofBot();
+void drawCoreBuilding(float width, float height, float depth, unsigned int textFront, unsigned int textBack, unsigned int textRight, unsigned int textLeft, unsigned int textTop, unsigned int textBottom, float textKoor);
 
 
 #endif

@@ -163,3 +163,5 @@ Image* loadBMP(const char* filename) {
 	return new Image(pixels2.release(), width, height);
 }
 
+
+
