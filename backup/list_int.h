@@ -19,6 +19,6 @@ void addIntToList(LInts * L, P_Int P);
 void removeIntFromList(LInts * L, char name[]);
 void initListInts(LInts * L);
 void printListItemInts(LInts L);
-P_Int createInstanceInt(char name[10], unsigned int value);
+P_Int createInstanceInt(char name[], unsigned int value);
 
 #endif

@@ -1,4 +1,9 @@
-#include "scene.h"
+//#include "scene.h"
+#include "cJSON.h"
+#include "list_string.h"
+#include "list_int.h"
+#include "list_double.h"
+//#include "interface.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include <windows.h>
@@ -12,10 +17,44 @@ LDoubles lMeasures;
 
 cJSON * jsonPendopo;
 
-double rotate_y = 0; 
-double rotate_x = 0;
-double rotate_z = 0;
-double scale = 0.5;
+float xrot = 0.0f;
+float yrot = 0.0f;
+float zrot = 0.0f;
+float xdiff = 0.0f;
+float ydiff = 0.0f;
+float scale = 1.0f;
+BOOL mouseDown = FALSE;
+BOOL fullscreen = FALSE;
+GLfloat yObjek = 15.0;
+ 
+GLuint textureid;
+GLuint textureFloor;
+GLuint textureTembok;
+GLuint texturePondasi;
+GLuint textureTiang;
+GLuint textureVentilasi;
+GLuint texturePlafon;
+ GLfloat widthTembok; 
+ GLfloat heightTembok;
+ GLfloat depthTembok;
+ GLfloat widthBase;
+ GLfloat  heightBase;
+ GLfloat depthBase;
+ GLfloat widthGapura;
+ GLfloat heightGapura;
+ GLfloat depthGapura;
+ GLfloat widthTiang;
+ GLfloat  heightTiang;
+ GLfloat depthTiang;
+ GLfloat widthTangga;
+ GLfloat heightTangga;
+ GLfloat depthTangga;
+ GLfloat widthFentilasi;
+ GLfloat heightFentilasi;
+ GLfloat depthFentilasi;
+
+
+cJSON *objPendopo;
 
 void loadFile();
 void loadConfigs();
@@ -24,26 +63,28 @@ void loadMeasures();
 //void bindBmp(Image* image, GLuint * textureId);
 
 int main(int argc, char* argv[]){
-	glutInit(&argc, argv);
+//	glutInit(&argc, argv);
 	loadFile();
 	loadConfigs();
-	glutInitWindowSize(atoi(getString(lConfigs, "window_width")->value), atoi(getString(lConfigs, "window_height")->value));
-	glutInitWindowPosition(0.0, 0.0);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow(getString(lConfigs, "window_name")->value);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	loadTextures();
-	loadMeasures();
-	glutDisplayFunc(onWorldDisplay);
-	glutReshapeFunc(onWorldReshape);
-	glutMotionFunc (onMotionMouseClicked);
-	glutMouseFunc(onButtonMouseClicked);
-	glutSpecialFunc(onSpecialKeyClicked);
-	glutKeyboardFunc(onNormalKeyClicked);
-	glutPassiveMotionFunc(onPassiveMouseActived);
-	glutIdleFunc(onWorldIdle);
-	glutMainLoop();
+//	glutInitWindowSize(atoi(getString(lConfigs, "window_width")->value), atoi(getString(lConfigs, "window_height")->value));
+//	glutInitWindowPosition(0.0, 0.0);
+//	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
+//	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+//	glutCreateWindow(getString(lConfigs, "window_name")->value);
+//	glEnable(GL_DEPTH_TEST);
+//	glEnable(GL_TEXTURE_2D);
+//	loadTextures();
+//	loadMeasures();
+//	glutDisplayFunc(onWorldDisplay);
+//	glutReshapeFunc(onWorldReshape);
+//	glutMotionFunc (onMotionMouseClicked);
+//	glutMouseFunc(onButtonMouseClicked);
+//	glutSpecialFunc(onSpecialKeyClicked);
+//	glutKeyboardFunc(onNormalKeyClicked);
+//	glutPassiveMotionFunc(onPassiveMouseActived);
+//	glutIdleFunc(onWorldIdle);
+//	glutMainLoop();	
+	start(argc, argv);
 	return 0;
 }
 
@@ -104,12 +145,12 @@ void loadTextures(){
 	}
 	printf("Load Textures : \n");
 	printListItemInts(lTextures);	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
  	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
  	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 }
@@ -140,7 +181,7 @@ void loadMeasures(){
 	    addDoubleToList(&lMeasures,
 	    	createInstanceDouble(
 				cJSON_GetObjectItem(item_measure, "name")->valuestring, 
-				cJSON_GetObjectItem(item_measure, "value")->valuestring
+				cJSON_GetObjectItem(item_measure, "value")->valuedouble
 			)
 		);
 	}

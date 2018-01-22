@@ -1,13 +1,58 @@
 {
 	"measures": [{
-		"name": "pendopo_height",
-		"value": "600"
-	}, {
-		"name": "pendopo_lenght",
-		"value": "600"
-	}, {
 		"name": "pendopo_width",
-		"value": "600"
+		"value": 1
+	}, {
+		"name": "pendopo_height",
+		"value": 1
+	}, {
+		"name": "pendopo_depth",
+		"value": 1
+	},{
+		"name": "width_tembok",
+		"value": 0
+	}, {
+		"name": "height_tembok",
+		"value": 0
+	}, {
+		"name": "depth_tembok",
+		"value": 0
+	},{
+		"name": "width_gapura",
+		"value": 0
+	}, {
+		"name": "height_gapura",
+		"value": 0
+	}, {
+		"name": "depth_gapura",
+		"value": 0
+	} ,{
+		"name": "width_tiang",
+		"value": 0
+	}, {
+		"name": "height_tiang",
+		"value": 0
+	}, {
+		"name": "depth_tiang",
+		"value": 0
+	},{
+		"name": "width_tangga",
+		"value": 0
+	}, {
+		"name": "height_tangga",
+		"value": 0
+	}, {
+		"name": "depth_tangga",
+		"value": 0
+	},{
+		"name": "width_ventilasi",
+		"value": 0
+	}, {
+		"name": "height_ventilasi",
+		"value": 0
+	}, {
+		"name": "depth_ventilasi",
+		"value": 0
 	}],
 	"configs": [{
 		"name": "window_height",
@@ -20,10 +65,37 @@
 		"value": "Pendopo Agung Tony"
 	}],
 	"textures": [{
-		"name": "atap",
-		"value": "Texture/atap_bawah.jpg"
+		"name": "pilar-2",
+		"value": "asset/pilar-2.bmp"
+	}, {
+		"name": "interior",
+		"value": "asset/interior.bmp"
+	}, {
+		"name": "lantai-2",
+		"value": "asset/floor-2.bmp"
 	}, {
 		"name": "lantai",
-		"value": "Texture/pilar.jpg"
+		"value": "asset/floor.bmp"
+	}, {
+		"name": "pilar",
+		"value": "asset/pilar.bmp"
+	}, {
+		"name": "batu",
+		"value": "asset/rock.bmp"
+	}, {
+		"name": "atap",
+		"value": "asset/roof.bmp"
+	}, {
+		"name": "atap-2",
+		"value": "asset/roof-2.bmp"
+	}, {
+		"name": "ventilasi",
+		"value": "asset/ventilasi.bmp"
+	}, {
+		"name": "jendela",
+		"value": "asset/window.bmp"
+	}, {
+		"name": "tembok4",
+		"value": "asset/tembok4.bmp"
 	}]
 }

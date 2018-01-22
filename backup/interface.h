@@ -9,5 +9,6 @@ void drawCube(Coord coord, GLfloat radius, Color color[], GLuint textureId, BOOL
 void drawPrism4(Coord coord, GLfloat length, GLfloat width, GLfloat height, Color color[],  GLuint textureId, BOOL bindings[], GLfloat repeat);
 void drawPrismTrapezoid(Coord coord, GLfloat lengtha, GLfloat lengthb, GLfloat width, GLfloat height, Color color[], GLuint textureId, BOOL bindings[], GLfloat repeat);
 void drawCartesius(Coord coord, GLfloat radius);
+//void drawBox(GLfloat width, GLfloat height, GLfloat depth, GLuint textFront, GLuint textBack, GLuint textRight, GLuint textLeft, GLuint textTop, GLuint textBottom, GLfloat textKoor);
 
 #endif

@@ -79,7 +79,7 @@ void initListInts(LInts * L){
 	(*L).last = NULL;
 }
 
-P_Int createInstanceInt(char name[10], unsigned int value){
+P_Int createInstanceInt(char name[], unsigned int value){
 	P_Int P = allocInt();
 	P->value = value;
 	strcpy(P->name, name);

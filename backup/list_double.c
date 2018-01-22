@@ -26,6 +26,14 @@ P_Double getDouble(LDoubles L, char name[]){
 	return P;	
 }
 
+
+void setDouble(LDoubles * L, char name[], double value){
+	P_Double P = getDouble((*L), name);
+	if(P != NULL){
+		P->value = value;
+	}
+}
+
 void deAllocDouble (P_Double P){
 	free(P);
 }
@@ -79,9 +87,9 @@ void initListDoubles(LDoubles * L){
 	(*L).last = NULL;
 }
 
-P_Double createInstanceDouble(char name[10], double value){
+P_Double createInstanceDouble(char name[], double value){
 	P_Double P = allocDouble();
+	strcpy(P->name, name);
 	P->value = value;
-	
 	return P;
 }

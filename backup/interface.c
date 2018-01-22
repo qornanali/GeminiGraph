@@ -281,4 +281,56 @@ void drawCartesius(Coord coord, GLfloat radius){
 	glPopMatrix();
 }
 
+//void drawBox(GLfloat width, GLfloat height, GLfloat depth, GLuint textFront, GLuint textBack, GLuint textRight, GLuint textLeft, GLuint textTop, GLuint textBottom, GLfloat textKoor)
+//{
+//	width = width*0.5;
+//	depth = depth*0.5;
+//	height = height*0.5;
+//	GLfloat face[6][4][3]= {
+//		{{-width,-height, -depth},{width, -height, -depth},{width, height, -depth},{-width, height, -depth}}, //front
+//		{{-width,-height, depth},{width, -height, depth},{width, height, depth},{-width, height, depth}},		//back
+//		{{width, -height, -depth},{width, -height, depth},{width, height, depth},{width, height, -depth}},		//right
+//		{{-width, -height, depth},{-width, -height, -depth},{-width, height, -depth},{-width, height, depth}},	//left
+//		{{width, height, depth},{-width, height, depth},{-width, height, -depth},{width, height, -depth}},	//top
+//		{{-width, -height, depth},{width, -height, depth},{width, -height, -depth},{-width, -height, -depth}} //bottom
+//	};
+//	
+//	int i;
+//	for(i=0;i<6;i++){
+//		switch (i){
+//			case 0 :
+//				 glBindTexture(GL_TEXTURE_2D, textFront);
+//				 break;
+//			case 1 :
+//				glBindTexture(GL_TEXTURE_2D, textBack);
+//				break;
+//			case 2 :
+//				glBindTexture(GL_TEXTURE_2D, textRight);
+//				break;
+//			case 3 :
+//				glBindTexture(GL_TEXTURE_2D, textLeft);
+//				break;
+//			case 4 :
+//				glBindTexture(GL_TEXTURE_2D, textTop);
+//				break;
+//			case 5 :
+//				glBindTexture(GL_TEXTURE_2D, textBottom);
+//				break;	
+//		}
+//		glPushMatrix();
+//		glBegin(GL_POLYGON);
+//		glColor3f(1,1,1);
+//		glTexCoord2f(0,textKoor);
+//		glVertex3f(face[i][0][0], face[i][0][1], face[i][0][2]);
+//		glTexCoord2f(textKoor,textKoor);
+//		glVertex3f(face[i][1][0], face[i][1][1], face[i][1][2]);
+//		glTexCoord2f(textKoor,0);
+//		glVertex3f(face[i][2][0], face[i][2][1], face[i][2][2]);
+//		glTexCoord2f(0,0);
+//		glVertex3f(face[i][3][0], face[i][3][1], face[i][3][2]);
+//		glEnd();
+//		glPopMatrix();
+//	}
+//}
+
 
