@@ -1,3 +1,11 @@
+/*
+Nama file : color.h
+Dibuat oleh : Ali Qornan Jaisyurrahman
+Tanggal : 22 januari 2018 18:42 WIB
+Fungsi : ADT yang berfungsi untuk menyimpan nilai float untuk perpaduan warna red, green, dan blue
+Lisensi : https://github.com/qornanali/PendopoTonyAgung-OpenGL-C/blob/master/LICENSE
+*/ 
+
 #ifndef  __COLOR_H__
 #define  __COLOR_H__
 
@@ -14,6 +22,8 @@ typedef struct Color{
 	float b;
 } Color;
 
+/* Mengembalikan nilai variabel baru yang sudah dimasukkan nilai ke dalam masing-masing
+atributnya. */
 Color insColor(float r, float g, float b);
 
 #endif

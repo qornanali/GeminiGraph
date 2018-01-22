@@ -1,3 +1,11 @@
+/*
+Nama file : scene.c
+Dibuat oleh : Ali Qornan Jaisyurrahman
+Tanggal : 22 januari 2018 18:42 WIB
+Fungsi : ADT untuk mendefinisikan aksi callback yang didapat saat menjalankan Freeglut pada suatu event tertentu
+Lisensi : https://github.com/qornanali/PendopoTonyAgung-OpenGL-C/blob/master/LICENSE
+*/ 
+
 #include "scene.h"
 
 #include "pendopo.h"
@@ -40,6 +48,7 @@ GLfloat widthTembok;
  GLfloat heightFentilasi;
  GLfloat depthFentilasi;
 
+/* Method callback yang dipanggil freeglut saat inisiasi sudah selesai dan akan menampilkan objek. */
 void onWorldDisplay(){
 	widthBase = 80;
 	widthTembok = widthBase - 20;
@@ -160,6 +169,7 @@ P_Double Pscalex, Pscaley, Pscalez;
   	glutSwapBuffers();
 }
 
+/* Method callback yang dipanggil freeglut saat tidak ada event callback lain yang berjalan. */
 void onWorldIdle(){
 //	if (!mouseDown){
 //		xrot += 0.01f;
@@ -170,6 +180,7 @@ void onWorldIdle(){
 //	glutPostRedisplay();
 }
 
+/* Method callback yang dipanggil freeglut saat window berubah ukuran. */
 void onWorldReshape(int w, int h){
 	glMatrixMode(GL_PROJECTION);
  	glLoadIdentity();
@@ -178,6 +189,7 @@ void onWorldReshape(int w, int h){
 	glLoadIdentity();
 }
 
+/* Method callback yang dipanggil freeglut saat ada key special yang ditekan oleh pengguna. */
 void onSpecialKeyClicked(int key, int x, int y ){
   	if (key == GLUT_KEY_RIGHT)
     	yrot++;
@@ -203,6 +215,7 @@ void onSpecialKeyClicked(int key, int x, int y ){
   	glutPostRedisplay();
 } 
 
+/* Method callback yang dipanggil freeglut saat ada normal key yang ditekan oleh pengguna */
 void onNormalKeyClicked(unsigned char key, int x, int y){
 	glMatrixMode(GL_PROJECTION);
 	switch (key){
@@ -230,6 +243,7 @@ void onNormalKeyClicked(unsigned char key, int x, int y){
 	glutPostRedisplay();
 }
 
+/* Method callback yang dipanggil freeglut saat pengguna menahan klik pada tombol mouse dan melakukan pergerakan mouse */
 void onMotionMouseClicked(int x, int y){
 	if (mouseDown){
 		yrot = x - xdiff;
@@ -238,6 +252,7 @@ void onMotionMouseClicked(int x, int y){
 	}
 }
 
+/* Method callback yang dipanggil freeglut saat pengguna mengklik tombol mouse. */
 void onButtonMouseClicked(int button, int state, int x, int y){
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		mouseDown = TRUE;
@@ -248,6 +263,7 @@ void onButtonMouseClicked(int button, int state, int x, int y){
 	}
 }
 
+/* Method callback yang dipanggil freeglut ketika mouse bergerak secara pasif di window. */
 void onPassiveMouseActived(int x, int y){
 	
 }
