@@ -1,0 +1,125 @@
+{
+	"measures": [{
+		"name": "pendopo_height",
+		"value": 0.8
+	},{
+		"name": "pendopo_width",
+		"value": 0.6
+	},{
+		"name": "pendopo_depth",
+		"value": 0.6
+	},{
+		"name": "scale_height",
+		"value": 1.0
+	},{
+		"name": "scale_width",
+		"value": 1.0
+	},{
+		"name": "scale_depth",
+		"value": 1.0
+	},{
+		"name": "width_base",
+		"value": 80
+	}, {
+		"name": "height_base",
+		"value": 2
+	}, {
+		"name": "depth_base",
+		"value": 95
+	}, {
+		"name": "width_tembok",
+		"value": 0
+	}, {
+		"name": "height_tembok",
+		"value": 0
+	}, {
+		"name": "depth_tembok",
+		"value": 0
+	},{
+		"name": "width_gapura",
+		"value": 0
+	}, {
+		"name": "height_gapura",
+		"value": 0
+	}, {
+		"name": "depth_gapura",
+		"value": 0
+	} ,{
+		"name": "width_tiang",
+		"value": 0
+	}, {
+		"name": "height_tiang",
+		"value": 0
+	}, {
+		"name": "depth_tiang",
+		"value": 0
+	},{
+		"name": "width_tangga",
+		"value": 0
+	}, {
+		"name": "height_tangga",
+		"value": 0
+	}, {
+		"name": "depth_tangga",
+		"value": 0
+	},{
+		"name": "width_ventilasi",
+		"value": 0
+	}, {
+		"name": "height_ventilasi",
+		"value": 0
+	}, {
+		"name": "depth_ventilasi",
+		"value": 0
+	}],
+	"configs": [{
+		"name": "window_height",
+		"value": "800"
+	}, {
+		"name": "window_width",
+		"value": "1200"
+	}, {
+		"name": "window_name",
+		"value": "Pendopo Agung Tony"
+	}],
+	"textures": [{
+		"name": "pilar-2",
+		"value": "asset/pilar-2.bmp"
+	}, {
+		"name": "interior",
+		"value": "asset/interior.bmp"
+	}, {
+		"name": "lantai-2",
+		"value": "asset/floor-2.bmp"
+	}, {
+		"name": "lantai",
+		"value": "asset/floor.bmp"
+	}, {
+		"name": "pilar",
+		"value": "asset/pilar.bmp"
+	}, {
+		"name": "batu",
+		"value": "asset/rock.bmp"
+	}, {
+		"name": "atap",
+		"value": "asset/roof.bmp"
+	}, {
+		"name": "atap-2",
+		"value": "asset/roof-2.bmp"
+	}, {
+		"name": "ventilasi",
+		"value": "asset/ventilasi.bmp"
+	}, {
+		"name": "jendela",
+		"value": "asset/window.bmp"
+	}, {
+		"name": "tembok4",
+		"value": "asset/tembok4.bmp"
+	}, {
+		"name": "asphalt",
+		"value": "asset/asphalt.bmp"
+	}, {
+		"name": "sky",
+		"value": "asset/sky-2.bmp"
+	}]
+}

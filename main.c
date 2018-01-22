@@ -1,123 +1,165 @@
-#include "pendopo.h"
+#include "scene.h"
+#include "cJSON.h"
+#include "list_string.h"
+#include "list_int.h"
+#include "list_double.h"
+#include "interface.h"
 #include <stdio.h>
+#include <stdarg.h>
+#include <windows.h>
+#include <SOIL.h>
+#include <GL/glut.h>
+//#include "textureloader.h"
 
-#define VIEWING_DISTANCE_MIN  3.0
+LInts lTextures;
+LStrings lConfigs;
+LDoubles lMeasures;
 
-static double rotate_y=0; 
-static double rotate_x=0;
-static double rotate_z=0;
-static GLfloat g_fViewDistance = 3 * VIEWING_DISTANCE_MIN;
-static float g_lightPos[4] = { 10, 10, -100, 1 };
-static int g_yClick = 0;
-static BOOL g_bButton1Down = FALSE;
+float xrot = 0.0f;
+float yrot = 0.0f;
+float zrot = 0.0f;
+float xdiff = 0.0f;
+float ydiff = 0.0f;
+float scale = 1.0f;
+BOOL mouseDown = FALSE;
+BOOL fullscreen = FALSE;
+GLfloat yObjek = 15.0;
 
-int yoy = 0;
+cJSON * jsonPendopo;
 
-GLuint brickTextureId;
+void loadFile();
+void loadConfigs();
+void loadTextures();
+void loadMeasures();
 
-void onDisplay();
-void onReshape(int w, int h); 
-void onSpecialKeysClicked(int key, int x, int y ); 
-void onLoadTexture(); 
-void onMotionMouse(int x, int y);
-void onMouseClicked(int button, int state, int x, int y);
-void onKeysClicked(unsigned char key, int x, int y);
-void onDrawScene();
+//void bindBmp(Image* image, GLuint * textureId);
 
-int main(int argc, char** argv) {
-	glIntBegin(argc, argv);
-		glutDisplayFunc(onDisplay);
-		glutReshapeFunc(onReshape);
-		glutMotionFunc (onMotionMouse);
-		glutMouseFunc (onMouseClicked);
-		glutSpecialFunc(onSpecialKeysClicked);
-		glutKeyboardFunc (onKeysClicked);
-	glIntEnd();
+int main(int argc, char* argv[]){
+	glutInit(&argc, argv);
+	loadFile();
+	loadConfigs();
+	loadMeasures();
+	glutInitWindowSize(atoi(getString(lConfigs, "window_width")->value), atoi(getString(lConfigs, "window_height")->value));
+	glutInitWindowPosition(0.0, 0.0);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
+	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	glutCreateWindow(getString(lConfigs, "window_name")->value);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	loadTextures();
+	glutDisplayFunc(onWorldDisplay);
+	glutReshapeFunc(onWorldReshape);
+	glutMotionFunc (onMotionMouseClicked);
+	glutMouseFunc(onButtonMouseClicked);
+	glutSpecialFunc(onSpecialKeyClicked);
+	glutKeyboardFunc(onNormalKeyClicked);
+	glutPassiveMotionFunc(onPassiveMouseActived);
+	glutIdleFunc(onWorldIdle);
+	glutMainLoop();	
+//	start(argc, argv);
 	return 0;
 }
 
 
-/*GL Interfaces*/
-void onDisplay(){
-	printf("Modul Display\n");
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	gluLookAt(0.0, -g_fViewDistance, 0.0, 0, 0, -1, 0, 1, 0);
-	glLightfv(GL_LIGHT0, GL_POSITION, g_lightPos);
-	onLoadTexture();
-	glMatrixMode(GL_MODELVIEW);
-  	glPushMatrix();
-	  	glRotatef(rotate_x, 1.0, 0.0, 0.0 );
-	  	glRotatef(rotate_y, 0.0, 1.0, 0.0 );
-	  	glRotatef(rotate_z, 0.0, 0.0, 1.0 );
-	  	glIntDrawCartesius(DEFAULT_COORD, 100.0);
-		onDrawScene();
-	glPopMatrix();
-   	glutSwapBuffers();
+void loadFile(){
+	int i=0;
+	char c;
+	char content[5000];
+	FILE *fPendopo = fopen("pendopo.json","r");
+	if (fPendopo != NULL){
+		while ((c = fgetc(fPendopo)) != EOF) {
+			content[i] = c;
+			i++;
+		}
+	}
+	content[i] = '\0';
+	printf("pendopo.json\n%s\n",content);
+	jsonPendopo = cJSON_Parse(content);
+    fclose(fPendopo);
 }
 
-void onDrawScene(){
-	glIntDrawPrism3(DEFAULT_COORD, 2.0, 1.0, 3.0, DEFAULT_COLOR);
-	glIntDrawPrism4(insCoord(3.0, 3.0, 3.0), 2.0, 1.0, 3.0, DEFAULT_COLOR, brickTextureId);
+void loadConfigs(){
+	int i;
+	initListStrings(&lConfigs);
+	cJSON * array_configs = cJSON_GetObjectItem(jsonPendopo, "configs");
+	for(i = 0; i < cJSON_GetArraySize(array_configs); i++){
+	    cJSON * item_config = cJSON_GetArrayItem(array_configs, i);
+	    addStringToList(&lConfigs,
+	    	createInstanceString(
+				cJSON_GetObjectItem(item_config, "name")->valuestring, 
+				cJSON_GetObjectItem(item_config, "value")->valuestring
+			)
+		);
+	}
+	printf("Load Configs : \n");
+	printListItemStrings(lConfigs);
 }
 
-void onReshape(int w, int h){
-	glViewport(0.0, 0.0, w, h);
-	glMatrixMode(GL_PROJECTION);
-   	glLoadIdentity();
-   	gluPerspective(100.0, (float) w / h, 1, 1000);
-    glMatrixMode(GL_MODELVIEW);
-}
-
-void onLoadTexture(){
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_COLOR_MATERIAL);
-	
-	Image* image = loadBMP("assets/brick.bmp");
-	brickTextureId = glIntLoadTexture(image);
-	delete image;
-}
-
-void onSpecialKeysClicked(int key, int x, int y){
-	if (key == GLUT_KEY_RIGHT)
-    rotate_y += 5;
-	
-	else if (key == GLUT_KEY_LEFT)
-		rotate_y -= 5;
-	else if (key == GLUT_KEY_UP)
-		rotate_x += 5;
-	else if (key == GLUT_KEY_DOWN)
-		rotate_x -= 5;
-	else if (key == GLUT_KEY_PAGE_UP)
-		rotate_z += 5;
-	else if(key == GLUT_KEY_PAGE_DOWN)
-		rotate_z-= 5;
-	else if(key == GLUT_KEY_END)
-		exit(0);
-	
-	glutPostRedisplay();
-}
-
-void onMouseClicked(int button, int state, int x, int y){
- 
-  if (button == GLUT_LEFT_BUTTON){
-      g_bButton1Down = (state == GLUT_DOWN) ? TRUE : FALSE;
-      g_yClick = y - 3 * g_fViewDistance;
-	  }
-}
-
-void onMotionMouse(int x, int y){
-	if (g_bButton1Down)
-    {
-      g_fViewDistance = (y - g_yClick) / 3.0;
-      if (g_fViewDistance < VIEWING_DISTANCE_MIN)
-         g_fViewDistance = VIEWING_DISTANCE_MIN;
-      glutPostRedisplay();
-    }
+void loadTextures(){
+	int i;
+	initListInts(&lTextures);
+	cJSON * array_textures = cJSON_GetObjectItem(jsonPendopo, "textures");
+	for(i = 0; i < cJSON_GetArraySize(array_textures); i++){
+	    cJSON * item_texture = cJSON_GetArrayItem(array_textures, i);
+//		Image * image = loadBMP(cJSON_GetObjectItem(item_texture, "value")->valuestring);
+//		bindBmp(image, &P->id);
+//		delete image;	
+		addIntToList(&lTextures, 
+			createInstanceInt(
+				cJSON_GetObjectItem(item_texture, "name")->valuestring, //0
+				SOIL_load_OGL_texture(
+					cJSON_GetObjectItem(item_texture, "value")->valuestring,
+					SOIL_LOAD_AUTO,
+					SOIL_CREATE_NEW_ID,
+					SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS
+				)
+			)
+		);
+	}
+	printf("Load Textures : \n");
+	printListItemInts(lTextures);	
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+ 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+ 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 }
 
 
-void onKeysClicked(unsigned char key, int x, int y){
-	
+//void bindBmp(Image* image, GLuint * textureId) {
+//	glGenTextures(1, textureId);
+//	glBindTexture(GL_TEXTURE_2D, *textureId);
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);	
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+// 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+// 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+////    glGenerateMipmap(GL_TEXTURE_2D);
+//}
+
+
+void loadMeasures(){
+	int i;
+	initListDoubles(&lMeasures);
+	cJSON * array_measures = cJSON_GetObjectItem(jsonPendopo, "measures");
+	for(i = 0; i < cJSON_GetArraySize(array_measures); i++){
+	    cJSON * item_measure = cJSON_GetArrayItem(array_measures, i);
+	    addDoubleToList(&lMeasures,
+	    	createInstanceDouble(
+				cJSON_GetObjectItem(item_measure, "name")->valuestring, 
+				cJSON_GetObjectItem(item_measure, "value")->valuedouble
+			)
+		);
+	}
+	printf("Load Measures : \n");
+	printListItemDoubles(lMeasures);
 }
+
+
