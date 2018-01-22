@@ -1,6 +1,6 @@
 #include "backup.h"
 
- 
+
  BOOL fullscreen;
  BOOL mouseDown;
  

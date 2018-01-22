@@ -1,9 +1,9 @@
-//#include "scene.h"
+#include "scene.h"
 #include "cJSON.h"
 #include "list_string.h"
 #include "list_int.h"
 #include "list_double.h"
-//#include "interface.h"
+#include "interface.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include <windows.h>
@@ -15,8 +15,6 @@ LInts lTextures;
 LStrings lConfigs;
 LDoubles lMeasures;
 
-cJSON * jsonPendopo;
-
 float xrot = 0.0f;
 float yrot = 0.0f;
 float zrot = 0.0f;
@@ -26,35 +24,8 @@ float scale = 1.0f;
 BOOL mouseDown = FALSE;
 BOOL fullscreen = FALSE;
 GLfloat yObjek = 15.0;
- 
-GLuint textureid;
-GLuint textureFloor;
-GLuint textureTembok;
-GLuint texturePondasi;
-GLuint textureTiang;
-GLuint textureVentilasi;
-GLuint texturePlafon;
- GLfloat widthTembok; 
- GLfloat heightTembok;
- GLfloat depthTembok;
- GLfloat widthBase;
- GLfloat  heightBase;
- GLfloat depthBase;
- GLfloat widthGapura;
- GLfloat heightGapura;
- GLfloat depthGapura;
- GLfloat widthTiang;
- GLfloat  heightTiang;
- GLfloat depthTiang;
- GLfloat widthTangga;
- GLfloat heightTangga;
- GLfloat depthTangga;
- GLfloat widthFentilasi;
- GLfloat heightFentilasi;
- GLfloat depthFentilasi;
 
-
-cJSON *objPendopo;
+cJSON * jsonPendopo;
 
 void loadFile();
 void loadConfigs();
@@ -63,28 +34,28 @@ void loadMeasures();
 //void bindBmp(Image* image, GLuint * textureId);
 
 int main(int argc, char* argv[]){
-//	glutInit(&argc, argv);
+	glutInit(&argc, argv);
 	loadFile();
 	loadConfigs();
-//	glutInitWindowSize(atoi(getString(lConfigs, "window_width")->value), atoi(getString(lConfigs, "window_height")->value));
-//	glutInitWindowPosition(0.0, 0.0);
-//	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
-//	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-//	glutCreateWindow(getString(lConfigs, "window_name")->value);
-//	glEnable(GL_DEPTH_TEST);
-//	glEnable(GL_TEXTURE_2D);
-//	loadTextures();
-//	loadMeasures();
-//	glutDisplayFunc(onWorldDisplay);
-//	glutReshapeFunc(onWorldReshape);
-//	glutMotionFunc (onMotionMouseClicked);
-//	glutMouseFunc(onButtonMouseClicked);
-//	glutSpecialFunc(onSpecialKeyClicked);
-//	glutKeyboardFunc(onNormalKeyClicked);
-//	glutPassiveMotionFunc(onPassiveMouseActived);
+	loadMeasures();
+	glutInitWindowSize(atoi(getString(lConfigs, "window_width")->value), atoi(getString(lConfigs, "window_height")->value));
+	glutInitWindowPosition(0.0, 0.0);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
+	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	glutCreateWindow(getString(lConfigs, "window_name")->value);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	loadTextures();
+	glutDisplayFunc(onWorldDisplay);
+	glutReshapeFunc(onWorldReshape);
+	glutMotionFunc (onMotionMouseClicked);
+	glutMouseFunc(onButtonMouseClicked);
+	glutSpecialFunc(onSpecialKeyClicked);
+	glutKeyboardFunc(onNormalKeyClicked);
+	glutPassiveMotionFunc(onPassiveMouseActived);
 //	glutIdleFunc(onWorldIdle);
-//	glutMainLoop();	
-	start(argc, argv);
+	glutMainLoop();	
+//	start(argc, argv);
 	return 0;
 }
 
@@ -100,7 +71,7 @@ void loadFile(){
 		}
 	}
 	content[i] = '\0';
-	printf("Pendopo.json\n%s\n",content);
+	printf("pendopo.json\n%s\n",content);
 	jsonPendopo = cJSON_Parse(content);
     fclose(fPendopo);
 }
