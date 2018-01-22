@@ -49,7 +49,7 @@ void drawLand(){
 	BOOL bindings[6] = {FALSE, FALSE, FALSE, FALSE, TRUE, FALSE};
 	P_Int Asphalt = getInt(lTextures, "asphalt");
 	glPushMatrix();
-	glTranslatef(-300.0, -0.75, -300.0);
+	glTranslatef(-300.0, -0.25, -300.0);
 	drawPrism4(DEFAULT_COORD, 600.0, 600.0, 0.25, colors, Asphalt == NULL ? 0 : Asphalt->value, bindings, 32);
 	glPopMatrix();
 }

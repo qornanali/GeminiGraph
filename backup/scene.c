@@ -49,20 +49,39 @@ void onWorldDisplay(){
 	depthTembok = depthBase - 20;
 	heightFentilasi = 1;
 	depthFentilasi = 0.5;
-	double scalex = getDouble(lMeasures, "width") == NULL ? 0 : getDouble(lMeasures, "width")->value;
-	double scaley = getDouble(lMeasures, "height") == NULL ? 0 : getDouble(lMeasures, "height")->value;
-	double scalez = getDouble(lMeasures, "depth") == NULL ? 0 : getDouble(lMeasures, "depth")->value;
-	GLuint tRock = getInt(lTextures, "batu") == NULL ? 0 : getInt(lTextures, "batu")->value; 
-	GLuint tFloor = getInt(lTextures, "lantai-2") == NULL ? 0 : getInt(lTextures, "lantai-2")->value; 
-	GLuint tPlafon = getInt(lTextures, "interior") == NULL ? 0 : getInt(lTextures, "interior")->value; 
-	GLuint tWall = getInt(lTextures, "tembok4") == NULL ? 0 : getInt(lTextures, "tembok4")->value; 
-	GLuint tPilar = getInt(lTextures, "pilar") == NULL ? 0 : getInt(lTextures, "pilar")->value; 
+P_Double Pscalex, Pscaley, Pscalez;
+	Pscalex =  getDouble(lMeasures, "scale_width");
+	Pscaley =  getDouble(lMeasures, "scale_height");
+	Pscalez =  getDouble(lMeasures, "scale_depth");
+	double scalex = Pscalex == NULL ? 1.0 : Pscalex->value;
+	double scaley = Pscaley == NULL ? 1.0 : Pscaley->value;
+	double scalez = Pscalez == NULL ? 1.0 : Pscalez->value;
+	P_Double PpendopoWidth, PpendopoHeight, PpendopoDepth;
+	PpendopoWidth =  getDouble(lMeasures, "pendopo_width");
+	PpendopoHeight =  getDouble(lMeasures, "pendopo_height");
+	PpendopoDepth =  getDouble(lMeasures, "pendopo_depth");
+	double pendopoWidth = PpendopoWidth == NULL ? 0.8 : PpendopoWidth->value;
+	double pendopoHeight = PpendopoHeight == NULL ? 1.0 : PpendopoHeight->value;
+	double pendopoDepth = PpendopoDepth == NULL ? 0.6 : PpendopoDepth->value;
+	printf("%f %f %f %f %f %f ini teh\n", scalex, scaley, scalez, pendopoWidth, pendopoHeight, pendopoDepth);
+	P_Int PtRock, PtFloor, PtPlafon, PtWall, PtPilar;
+	PtRock =  getInt(lTextures, "batu");
+	PtFloor =  getInt(lTextures, "lantai-2");
+	PtPlafon =  getInt(lTextures, "interior");
+	PtWall =  getInt(lTextures, "tembok4");
+	PtPilar =  getInt(lTextures, "pilar");
+	GLuint tRock = PtRock == NULL ? 0 : PtRock->value; 
+	GLuint tFloor = PtFloor == NULL ? 0 : PtFloor->value; 
+	GLuint tPlafon = PtPlafon == NULL ? 0 : PtPlafon->value; 
+	GLuint tWall = PtWall == NULL ? 0 : PtWall->value; 
+	GLuint tPilar = PtPilar == NULL ? 0 : PtPilar->value; 
+	printf("%d %d %d %d %d itu teh\n", tRock, tFloor, tPlafon, tWall, tPilar);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	gluLookAt(
 		0.0f, 10.0f, 60.0f,
 		0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f);
+		0.0f, 1.0f, 1.0f);
 //	glPushMatrix();
   	// glTranslatef( 0.1, 0.0, 0.0 );      // Not included
   	// glRotatef( 180, 0.0, 1.0, 0.0 );    // Not included
@@ -71,7 +90,12 @@ void onWorldDisplay(){
 	glRotatef(zrot, 0.0f, 0.0f, 0.1f);
 	glPushMatrix();		
 	drawCartesius(DEFAULT_COORD, 100.0);
-	glScalef(scalex, scaley, scalez);
+	glScalef(pendopoWidth * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth), 
+				pendopoHeight * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth), 
+				pendopoDepth * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth));
+				printf("%f %f %f scalenya\n", pendopoWidth * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth),
+				pendopoHeight * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth), 
+				pendopoDepth * (scalex / pendopoWidth) * (scaley / pendopoHeight) * (scalez / pendopoDepth));
 		//Base
 		glPushMatrix();
 		glTranslatef(0,heightBase * 0.5,0);
@@ -126,12 +150,13 @@ void onWorldDisplay(){
 		//tanggaa
 		drawStairs();
 		
+	glPopMatrix();
+	
 		//tanah
 		drawLand();
 		
 		//langit
 		drawSky();
-	glPopMatrix();
   	glutSwapBuffers();
 }
 

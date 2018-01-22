@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <windows.h>
-#include <GL/glut.h>
 #include <SOIL.h>
+#include <GL/glut.h>
 //#include "textureloader.h"
 
 LInts lTextures;
@@ -31,6 +31,7 @@ void loadFile();
 void loadConfigs();
 void loadTextures();
 void loadMeasures();
+
 //void bindBmp(Image* image, GLuint * textureId);
 
 int main(int argc, char* argv[]){
@@ -53,11 +54,12 @@ int main(int argc, char* argv[]){
 	glutSpecialFunc(onSpecialKeyClicked);
 	glutKeyboardFunc(onNormalKeyClicked);
 	glutPassiveMotionFunc(onPassiveMouseActived);
-//	glutIdleFunc(onWorldIdle);
+	glutIdleFunc(onWorldIdle);
 	glutMainLoop();	
 //	start(argc, argv);
 	return 0;
 }
+
 
 void loadFile(){
 	int i=0;
@@ -159,3 +161,5 @@ void loadMeasures(){
 	printf("Load Measures : \n");
 	printListItemDoubles(lMeasures);
 }
+
+

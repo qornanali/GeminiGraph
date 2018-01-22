@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=21
+UnitCount=19
 
 [VersionInfo]
 Major=1
@@ -232,26 +232,6 @@ BuildCmd=
 
 [Unit19]
 FileName=list_string.c
-CompileCpp=0
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit20]
-FileName=backup.c
-CompileCpp=0
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit21]
-FileName=backup.h
 CompileCpp=0
 Folder=
 Compile=1

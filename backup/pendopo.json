@@ -1,13 +1,22 @@
 {
 	"measures": [{
-		"name": "height",
-		"value": 1.0
+		"name": "pendopo_height",
+		"value": 0.2
 	},{
-		"name": "width",
-		"value": 1.0
+		"name": "pendopo_width",
+		"value": 0.4
 	},{
-		"name": "depth",
-		"value": 1.0
+		"name": "pendopo_depth",
+		"value": 0.6
+	},{
+		"name": "scale_height",
+		"value": 0.8
+	},{
+		"name": "scale_width",
+		"value": 0.2
+	},{
+		"name": "scale_depth",
+		"value": 0.8
 	},{
 		"name": "width_base",
 		"value": 80
