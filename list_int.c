@@ -1,3 +1,12 @@
+/*
+Nama file : list_int.c
+Dibuat oleh : Ali Qornan Jaisyurrahman
+Tanggal : 22 januari 2018 18:42 WIB
+Fungsi : ADT yang berfungsi untuk mengolah linked list bertipe data integer
+Lisensi : https://github.com/qornanali/PendopoTonyAgung-OpenGL-C/blob/master/LICENSE
+*/ 
+
+
 #include "list_int.h"
 
 #include <limits.h>
@@ -6,6 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 
+/* Method fungsi untuk mengalokasikan elemen baru pada memori. */
 P_Int allocInt(){
 	P_Int P = (P_Int) malloc(sizeof(Int));
 	P->value = 0;
@@ -14,6 +24,7 @@ P_Int allocInt(){
 	return P;
 }
 
+/* Method fungsi untuk mencari satu elemen pada linked list integer. */
 P_Int getInt(LInts L, char name[]){
 	P_Int P = L.first;
 	while(P != NULL){
@@ -26,10 +37,12 @@ P_Int getInt(LInts L, char name[]){
 	return P;	
 }
 
+/* Method prosedur untuk menghapus suatu elemen pada linked list di memori. */
 void deAllocInt (P_Int P){
 	free(P);
 }
 
+/* Method prosedur untuk menambah satu elemen baru pada linked list integer. */
 void addIntToList(LInts * L, P_Int P){
 	if((*L).first == NULL){
 		(*L).first = P;
@@ -39,6 +52,7 @@ void addIntToList(LInts * L, P_Int P){
 	(*L).last = P;
 }
 
+/* Method prosedur untuk menghapus satu elemen yang diinginkan pada linked list integer. */
 void removeIntFromList(LInts * L, char name[]){
 	P_Int PDel = (*L).first;
 	P_Int PRec = NULL;
@@ -64,6 +78,7 @@ void removeIntFromList(LInts * L, char name[]){
 	}	
 }
 
+/* Method prosedur untuk menginisiasikan struct LInts. */
 void printListItemInts(LInts L){
 	P_Int P = L.first;
 	int i = 0;
@@ -74,11 +89,13 @@ void printListItemInts(LInts L){
 	}
 }
 
+/* Method prosedur untuk menampilkan isi masing-masing elemen yang ada pada linked list integer. */
 void initListInts(LInts * L){
 	(*L).first = NULL;
 	(*L).last = NULL;
 }
 
+/* Method fungsi untuk memasukkan nilai kepada elemen yang sudah dialokasikan pada memori. */
 P_Int createInstanceInt(char name[], unsigned int value){
 	P_Int P = allocInt();
 	P->value = value;

@@ -1,3 +1,11 @@
+/*
+Nama file : pendopo.c
+Dibuat oleh : Ali Qornan Jaisyurrahman
+Tanggal : 22 januari 2018 18:42 WIB
+Fungsi : ADT yang befungsi untuk mengolah dan memadukan apa yang disediakan interface.c untuk membuat suatu bagian bangun dari pendopo
+Lisensi : https://github.com/qornanali/PendopoTonyAgung-OpenGL-C/blob/master/LICENSE
+*/ 
+
 #include "pendopo.h"
 
 #include "interface.h"
@@ -27,23 +35,8 @@ extern GLfloat depthTangga;
 extern GLfloat widthFentilasi;
 extern GLfloat heightFentilasi;
 extern GLfloat depthFentilasi;
-//
-//void drawWalls(float length, float width, float height){
-//	
-//}
 
-void drawPillars(float length, float width, float height){
-	
-}
-
-void drawFront(float length, float width, float height){
-	
-}
-
-//void drawRoof(float length, float width, float height){
-//	
-//}
-
+/* Method prosedur untuk membuat dataran tanah */
 void drawLand(){
 	Color colors[6] = {DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR};
 	BOOL bindings[6] = {FALSE, FALSE, FALSE, FALSE, TRUE, FALSE};
@@ -54,6 +47,7 @@ void drawLand(){
 	glPopMatrix();
 }
 
+/* Method prosedur untuk membuat langit. */
 void drawSky(){
 	Color colors[6] = {DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR, DEFAULT_COLOR};
 	BOOL bindings[6] = {TRUE, TRUE, TRUE, FALSE, FALSE, TRUE};
@@ -64,10 +58,7 @@ void drawSky(){
 	glPopMatrix();
 }
 
-void drawFloors(float length, float width, float height){
-	
-}
-
+/* Method prosedur untuk membuat tangga */
 void drawStairs(){
 	GLuint tRock = getInt(lTextures, "batu") == NULL ? 0 : getInt(lTextures, "batu")->value;
 	GLuint tFloor = getInt(lTextures, "lantai") == NULL ? 0 : getInt(lTextures, "lantai")->value;
@@ -118,6 +109,7 @@ void drawStairs(){
 	}	
 }
 
+/* Method prosedur untuk membuat ventilasi. */
 void drawVents(){
 	GLuint tVent = getInt(lTextures, "ventilasi") == NULL ? 0 : getInt(lTextures, "ventilasi")->value;
 	int i;
@@ -180,6 +172,7 @@ void drawVents(){
 	}
 }
 
+/* Method prosedur untuk membuat atap yang di tengah. */
 void drawGapura(){
 	GLuint tPilar = getInt(lTextures, "pilar-2") == NULL ? 0 : getInt(lTextures, "pilar-2")->value;
 	
@@ -269,6 +262,7 @@ void drawGapura(){
 	glPopMatrix();
 }
 
+/* Method prosedur untuk membuat alas atap. */
 void drawRoofMid(){
 	GLuint tRoof = getInt(lTextures, "atap") == NULL ? 0 : getInt(lTextures, "atap")->value;
 		//Back
@@ -342,6 +336,7 @@ void drawRoofMid(){
 	glEnd();
 }
 
+/* Method prosedur untuk membuat atap yang paling atas. */
 void drawRoofTop(){
 	GLuint tRoof = getInt(lTextures, "atap") == NULL ? 0 : getInt(lTextures, "atap")->value;
 	//atas atap Front
@@ -391,6 +386,7 @@ void drawRoofTop(){
 
 }
 
+/* Method prosedur untuk memanggil drawRoofMid(), drawRoofBot() dan drawRoofTop(). */
 void drawRoofBot(){
 	GLuint tPlafon = getInt(lTextures, "interior") == NULL ? 0 : getInt(lTextures, "interior")->value;
 	//	Bawah atap top
@@ -455,6 +451,8 @@ void drawRoofBot(){
 	glVertex3f(-1.05f, -0.0f, -1.05f);
 	glEnd();
 }
+
+/* Method prosedur untuk membuat gapura */
 void drawCoreBuilding(float width, float height, float depth, unsigned int textFront, unsigned int textBack, unsigned int textRight, unsigned int textLeft, unsigned int textTop, unsigned int textBottom, float textKoor){
 	width = width*0.5;
 	depth = depth*0.5;
@@ -501,6 +499,7 @@ void drawCoreBuilding(float width, float height, float depth, unsigned int textF
 	}
 }
 
+/* Method prosedur untuk membuat pilar dan dinding bangunan. */
 void drawRoof(){
 	glPushMatrix();
 		glTranslatef(0, heightBase + heightTembok + 0.25 * 0.5 + 0.05 *40, 0);

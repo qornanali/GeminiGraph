@@ -1,3 +1,11 @@
+/*
+Nama file : main.c
+Dibuat oleh : Ali Qornan Jaisyurrahman
+Tanggal : 22 januari 2018 18:42 WIB
+Fungsi : Modul utama program
+Lisensi : https://github.com/qornanali/PendopoTonyAgung-OpenGL-C/blob/master/LICENSE
+*/ 
+
 #include "scene.h"
 #include "cJSON.h"
 #include "list_string.h"
@@ -27,13 +35,19 @@ GLfloat yObjek = 15.0;
 
 cJSON * jsonPendopo;
 
+/* Method prosedur untuk mencari dan mengambil konten dari file yang dipilih. */
 void loadFile();
+
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list pengaturan untuk program.. */
 void loadConfigs();
+
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list id tekstur yang didapat setelah binding menggunakan library SOIL. */
 void loadTextures();
+
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list ukuran untk pembuatan bangun pendopo. */
 void loadMeasures();
 
-//void bindBmp(Image* image, GLuint * textureId);
-
+/* Method utama. */
 int main(int argc, char* argv[]){
 	glutInit(&argc, argv);
 	loadFile();
@@ -60,7 +74,7 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
-
+/* Method prosedur untuk mencari dan mengambil konten dari file yang dipilih. */
 void loadFile(){
 	int i=0;
 	char c;
@@ -78,6 +92,7 @@ void loadFile(){
     fclose(fPendopo);
 }
 
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list pengaturan untuk program.. */
 void loadConfigs(){
 	int i;
 	initListStrings(&lConfigs);
@@ -95,6 +110,7 @@ void loadConfigs(){
 	printListItemStrings(lConfigs);
 }
 
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list id tekstur yang didapat setelah binding menggunakan library SOIL. */
 void loadTextures(){
 	int i;
 	initListInts(&lTextures);
@@ -145,6 +161,7 @@ void loadTextures(){
 //}
 
 
+/* Method prosedur untuk memasukkan data yang ada pada file ke dalam linked list ukuran untk pembuatan bangun pendopo. */
 void loadMeasures(){
 	int i;
 	initListDoubles(&lMeasures);
